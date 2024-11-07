@@ -1,0 +1,18 @@
+# tests/test_routes.py
+
+import pytest
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_delete_item():
+    client = APIClient()
+    item = ItemFactory.create(title='Item to Delete')
+    
+    url = reverse('item-detail', kwargs={'pk': item.id})
+    response = client.delete(url)
+    
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+    assert not Item.objects.filter(id=item.id).exists()
