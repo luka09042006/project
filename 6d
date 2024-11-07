@@ -1,0 +1,9 @@
+# features/products.feature
+
+  Scenario: List all products
+    Given the following products exist:
+      | title      | category  | price | in_stock |
+      | Product A  | Electronics | 299.99 | true |
+      | Product B  | Furniture   | 199.99 | false |
+    When I request to list all products
+    Then I should see "Product A" and "Product B" in the product list
