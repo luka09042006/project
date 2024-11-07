@@ -1,0 +1,45 @@
+# service/routes.py
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from shop.models import Item
+from shop.serializers import ItemSerializer
+
+@api_view(['GET'])
+def list_items(request):
+    items = Item.objects.all()
+    serializer = ItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def list_items_by_name(request):
+    name = request.GET.get('title', None)
+    if name:
+        items = Item.objects.filter(title__icontains=name)
+    else:
+        items = Item.objects.all()
+    
+    serializer = ItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def list_items_by_category(request):
+    category = request.GET.get('category', None)
+    if category:
+        items = Item.objects.filter(category__icontains=category)
+    else:
+        items = Item.objects.all()
+    
+    serializer = ItemSerializer(items, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def list_items_by_availability(request):
+    availability = request.GET.get('in_stock', None)
+    if availability:
+        items = Item.objects.filter(in_stock=availability.lower() == 'true')
+    else:
+        items = Item.objects.all()
+    
+    serializer = ItemSerializer(items, many=True)
+    return Response(serializer.data)
