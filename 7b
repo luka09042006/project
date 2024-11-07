@@ -1,0 +1,9 @@
+# features/steps/web_steps.py
+
+from behave import then
+from selenium.webdriver.common.by import By
+
+@then('I should see "{text}" on the page')
+def step_impl(context, text):
+    body = context.driver.find_element(By.TAG_NAME, 'body')
+    assert text in body.text, f'Expected text "{text}" not found on the page'
