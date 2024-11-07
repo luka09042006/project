@@ -1,0 +1,16 @@
+# tests/test_models.py
+
+import pytest
+from shop.models import Item
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_delete_item():
+    item = ItemFactory.create(title='Item to Delete')
+    
+    # Delete the item
+    item.delete()
+    
+    # Check if the item no longer exists
+    with pytest.raises(Item.DoesNotExist):
+        Item.objects.get(id=item.id)
