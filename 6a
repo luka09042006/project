@@ -1,0 +1,10 @@
+# features/products.feature
+
+Feature: Product Management
+
+  Scenario: Read an existing product
+    Given the following products exist:
+      | title      | category  | price | in_stock |
+      | Product A  | Electronics | 299.99 | true |
+    When I request to view the product "Product A"
+    Then I should see the details of "Product A"
