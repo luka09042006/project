@@ -1,0 +1,9 @@
+# features/products.feature
+
+  Scenario: Search a product by name
+    Given the following products exist:
+      | title      | category   | price | in_stock |
+      | Product A  | Electronics | 299.99 | true |
+      | Product B  | Furniture   | 199.99 | false |
+    When I search for a product with name "Product A"
+    Then I should see "Product A" in the product list
