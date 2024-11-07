@@ -1,0 +1,17 @@
+# tests/test_models.py
+
+import pytest
+from shop.models import Item
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_find_item_by_category():
+    # Create items in different categories
+    item_1 = ItemFactory.create(category='Electronics')
+    item_2 = ItemFactory.create(category='Clothing')
+    
+    # Fetch items in the 'Electronics' category
+    electronics_items = Item.objects.filter(category='Electronics')
+    
+    assert len(electronics_items) == 1
+    assert electronics_items[0].category == 'Electronics'
