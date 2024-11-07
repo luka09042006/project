@@ -1,0 +1,21 @@
+# service/routes.py
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from shop.models import Item
+from shop.serializers import ItemSerializer
+
+@api_view(['PUT'])
+def update_item(request, pk):
+    try:
+        item = Item.objects.get(pk=pk)
+    except Item.DoesNotExist:
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+    
+    serializer = ItemSerializer(item, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
