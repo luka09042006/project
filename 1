@@ -1,0 +1,13 @@
+# tests/factories.py
+
+import factory
+from shop.models import Item  # Change to your actual model
+
+class ItemFactory(factory.Factory):
+    class Meta:
+        model = Item
+
+    title = factory.Faker('word')
+    category = factory.Faker('word')
+    price = factory.Faker('random_number', digits=2)
+    in_stock = factory.Faker('boolean')
