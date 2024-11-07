@@ -1,0 +1,19 @@
+# tests/test_routes.py
+
+import pytest
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_list_items_by_name():
+    client = APIClient()
+    ItemFactory.create(title='Apple Phone')
+    ItemFactory.create(title='Apple Watch')
+    
+    url = reverse('item-list')
+    response = client.get(url, {'title': 'Apple'})
+    
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 2
