@@ -1,0 +1,8 @@
+# features/products.feature
+
+  Scenario: Update an existing product
+    Given the following products exist:
+      | title      | category  | price | in_stock |
+      | Product A  | Electronics | 299.99 | true |
+    When I update the product "Product A" with new price "349.99"
+    Then the product "Product A" should have the updated price "349.99"
