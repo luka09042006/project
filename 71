@@ -1,0 +1,9 @@
+# features/steps/web_steps.py
+
+from behave import when
+from selenium import webdriver
+
+@when('I click the button with id "{button_id}"')
+def step_impl(context, button_id):
+    button = context.driver.find_element_by_id(button_id)
+    button.click()
