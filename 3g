@@ -1,0 +1,20 @@
+# tests/test_routes.py
+
+import pytest
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_list_items_by_availability():
+    client = APIClient()
+    ItemFactory.create(title='Item 1', in_stock=True)
+    ItemFactory.create(title='Item 2', in_stock=False)
+    
+    url = reverse('item-list')
+    response = client.get(url, {'in_stock': 'true'})
+    
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response.data) == 1
+    assert response.data[0]['in_stock'] is True
