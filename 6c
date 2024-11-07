@@ -1,0 +1,8 @@
+# features/products.feature
+
+  Scenario: Delete a product
+    Given the following products exist:
+      | title      | category  | price | in_stock |
+      | Product A  | Electronics | 299.99 | true |
+    When I delete the product "Product A"
+    Then "Product A" should no longer exist in the product list
