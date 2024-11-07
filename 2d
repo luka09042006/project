@@ -1,0 +1,16 @@
+# tests/test_models.py
+
+import pytest
+from shop.models import Item
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_list_all_items():
+    # Create multiple items
+    ItemFactory.create(title='Item 1')
+    ItemFactory.create(title='Item 2')
+    
+    # List all items
+    items = Item.objects.all()
+    
+    assert len(items) == 2
