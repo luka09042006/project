@@ -1,0 +1,15 @@
+# features/steps/load_steps.py
+
+from behave import given
+from shop.models import Item
+from tests.factories import ItemFactory
+
+@given('the following products exist')
+def step_impl(context):
+    products = [
+        {'title': 'Product 1', 'category': 'Electronics', 'price': 99.99, 'in_stock': True},
+        {'title': 'Product 2', 'category': 'Furniture', 'price': 199.99, 'in_stock': False},
+    ]
+    
+    for product in products:
+        ItemFactory.create(**product)
