@@ -1,0 +1,16 @@
+# tests/test_models.py
+
+import pytest
+from shop.models import Item  # Change to your actual model
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_read_item():
+    # Create an item using the factory
+    item = ItemFactory.create(title='Sample Item', category='Books')
+    
+    # Fetch the item from the database
+    fetched_item = Item.objects.get(title='Sample Item')
+    
+    assert fetched_item.title == 'Sample Item'
+    assert fetched_item.category == 'Books'
