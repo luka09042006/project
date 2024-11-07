@@ -1,0 +1,17 @@
+# tests/test_models.py
+
+import pytest
+from shop.models import Item
+from tests.factories import ItemFactory
+
+@pytest.mark.django_db
+def test_find_item_by_availability():
+    # Create items with different availability statuses
+    available_item = ItemFactory.create(in_stock=True)
+    unavailable_item = ItemFactory.create(in_stock=False)
+    
+    # Fetch available items
+    available_items = Item.objects.filter(in_stock=True)
+    
+    assert len(available_items) == 1
+    assert available_items[0].in_stock is True
